@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Nome do deployment
+  name: app-html-deployment
+  labels:
+    # Label do deployment
+    app: app-html
+spec:
+  # 3 replicas de app-html rodando simultaneamente
+  replicas: 5
+  # Seleciona os pods com o label app=app-html
+  selector:
+    matchLabels:
+      app: app-html
+  # Template do pod
+  template:
+    metadata:
+      labels:
+        app: app-html
+    spec:
+      containers:
+      - name: app-html
+        image: httpd:latest
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
+  
